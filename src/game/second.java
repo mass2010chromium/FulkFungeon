@@ -9,6 +9,16 @@ public class second extends JPanel implements ActionListener, KeyListener
     Timer t = new Timer(5, this);
     double x = 0, y = 0, accX = 0, accY = 0, velX = 0, velY = 0;
     
+    double lastX = 0, lastY = 0;
+    double lastX1 = 0, lastY1 = 0;
+    
+    public static void main(String[] args) {
+    	JFrame f = new JFrame();
+    	f.setSize(1000, 1000);
+    	f.add(new second());
+    	f.setVisible(true);
+    }
+    
     public second(){
         t.start();
         addKeyListener(this);
@@ -20,11 +30,20 @@ public class second extends JPanel implements ActionListener, KeyListener
     {
         super.paintComponent( g );
         Graphics2D g2 = (Graphics2D) g;
+        g.setColor(Color.LIGHT_GRAY);
+        g2.fill(new Ellipse2D.Double(lastX1, lastY1, 40, 40));
+        g.setColor(Color.GRAY);
+        g2.fill(new Ellipse2D.Double(lastX, lastY, 40, 40));
+        g.setColor(Color.DARK_GRAY);
         g2.fill(new Ellipse2D.Double(x, y, 40, 40));
     }
     
     public void actionPerformed(ActionEvent e)
     {
+    	lastX1 = lastX;
+    	lastY1 = lastY;
+    	lastX = x;
+    	lastY = y;
         if( x < 0 || x > 740 )
         {
             accX = 0;

@@ -24,6 +24,8 @@ public class GameMap {
 	private static final int WALL_WIDTH = 60;
 	private static final double DIFFICULTY_INCREASE = 1.05;
 	
+	private double scaleFactor;
+	
 	private Player player;
 	private Random rand;
 	private MazeGenerator gen;
@@ -33,7 +35,7 @@ public class GameMap {
 	
 	private int bossFightProb;
 	private BossFight lastBossFight;
-	private static final double BOSSFIGHT_CHANCE = 10;
+	private static final double BOSSFIGHT_CHANCE = 1;
 	
 	//TODO add boss portals
 	public GameMap(int xSize, int ySize, Player player) {
@@ -43,8 +45,9 @@ public class GameMap {
 		this.ySize = ySize;
 		gen = new MazeGenerator(rand);
 		difficulty = 0;
-		bossFightProb = -3;
+		bossFightProb = -2;
 		lastBossFight = null;
+		scaleFactor = 1;
 	}
 	
 	/**
@@ -53,7 +56,11 @@ public class GameMap {
 	 */
 	public void updatePosition(Graphics g) {
 		Point2D pt = applyOffset(new Point2D.Double());
-		g.translate((int) -pt.getX(), (int) -pt.getY());
+		g.translate((int) -(pt.getX() * scaleFactor), (int) -(pt.getY() * scaleFactor));
+	}
+	
+	public void untranslate(Graphics g) {
+		
 	}
 	
 	/**
@@ -62,8 +69,13 @@ public class GameMap {
 	 * @return The offsetted value
 	 */
 	public Point2D applyOffset(Point2D point) {
-		return new Point2D.Double(player.getCenter().getX() + point.getX() - xSize / 2, 
-				player.getCenter().getY() + point.getY() - ySize / 2);
+		return new Point2D.Double(player.getCenter().getX() + (point.getX() - xSize / 2) / scaleFactor, 
+				player.getCenter().getY() + (point.getY() - ySize / 2) / scaleFactor);
+//		return point;
+	}
+	
+	public double getScaleFactor() {
+		return scaleFactor;
 	}
 	
 	/**
@@ -76,8 +88,9 @@ public class GameMap {
 		game.resetMap();
 		if (rand.nextDouble() < bossFightProb / BOSSFIGHT_CHANCE) {
 			lastBossFight = Items.randomBossFight();
+			game.spawnEntity(lastBossFight);
 			lastBossFight.generate(player, game);
-			bossFightProb = -3;
+			bossFightProb = -2;
 		}
 		else {
 			if (lastBossFight != null) {
@@ -85,7 +98,7 @@ public class GameMap {
 				lastBossFight = null;
 			}
 			generateNormalMap(game);
-//			bossFightProb++;
+			bossFightProb++;
 		}
 	}
 	
@@ -164,7 +177,7 @@ public class GameMap {
 				System.out.println(squares[row][col]);
 				game.spawnEntity(Factory.instantiate(WeaponEnemy.class, 
 						(col + 0.5) * ROOM_SIZE, (row + 0.5) * ROOM_SIZE, rand));
-				System.out.println("Spawned mimniboss at " + row + ", " + col);
+				System.out.println("Spawned miniboss at " + row + ", " + col);
 				break;
 			}
 		}
@@ -198,5 +211,21 @@ public class GameMap {
 	 */
 	public int height() {
 		return floorHeight;
+	}
+
+	/**
+	 * Gets the current boss fight the player is in.
+	 * @return Current fight, or null.
+	 */
+	public BossFight getCurrentBossFight() {
+		return lastBossFight;
+	}
+	
+	/**
+	 * Sets the graphics scaling.
+	 * @param amount : Scale amount
+	 */
+	public void setScaleFactor(double amount) {
+		this.scaleFactor = amount;
 	}
 }

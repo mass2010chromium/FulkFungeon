@@ -17,7 +17,7 @@ import game.Game;
  *  @author  Assignment: Dungeon
  */
 
-public abstract class GameItem
+public abstract class GameItem //ALL TESTED
 {
 	private double xCenter, yCenter, xSize, ySize;
 	private Image image;

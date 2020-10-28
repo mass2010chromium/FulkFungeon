@@ -42,7 +42,13 @@ public class MazeGenerator {
 		this(new Random());
 	}
 	
-	public List<Line2D> generateMaze(int xSize, int ySize) {
+	/**
+	 * Generate a maze.
+	 * @param xSize : Width.
+	 * @param ySize : Height.
+	 * @return A list of lines for where there should be walls.
+	 */
+	public List<Line2D> generateMaze(int xSize, int ySize) { //TESTED
 		List<Line2D> walls = new ArrayList<Line2D>();
 		
 		Stack<Point> movement = new Stack<Point>();
@@ -146,7 +152,7 @@ public class MazeGenerator {
 	 * @author jpeng988
 	 *
 	 */
-	private class Point {
+	private class Point { //All TESTED
 		
 		private int row, col;
 		

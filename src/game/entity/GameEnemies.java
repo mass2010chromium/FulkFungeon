@@ -13,7 +13,7 @@ import utils.MathUtils;
  * @author jcpen
  *
  */
-public abstract class GameEnemies extends GameLiving implements ICollidable
+public abstract class GameEnemies extends GameLiving
 {
     protected Player player;
 
@@ -27,7 +27,7 @@ public abstract class GameEnemies extends GameLiving implements ICollidable
     {
         super( xCenter, yCenter, xSize, ySize, health * Game.INSTANCE.getMap().getDifficulty(), imgPath );
         player = Game.INSTANCE.getPlayer();
-        this.moveSpeed = moveSpeed;
+        this.moveSpeed = moveSpeed /* (0.75 + Math.random() / 2)*/;
         this.shootSpeed = shootSpeed;
     }
 
@@ -81,7 +81,7 @@ public abstract class GameEnemies extends GameLiving implements ICollidable
     }
     
     protected boolean startRandomMovement(int delayTime) {
-        if ( Math.abs( vX ) <= 0.01 && Math.abs( vY ) <= 0.01 )
+        if ( Math.abs( vX ) <= 0.1 && Math.abs( vY ) <= 0.1 )
         {
             randMove = delayTime;
             moveEigths(Math.PI * 2 * Math.random(), moveSpeed);
@@ -92,7 +92,7 @@ public abstract class GameEnemies extends GameLiving implements ICollidable
     }
 
     protected boolean moveRandomly() {
-        if ( Math.abs( vX ) <= 0.01 && Math.abs( vY ) <= 0.01 )
+        if ( Math.abs( vX ) <= 0.1 && Math.abs( vY ) <= 0.1 )
         {
         	randMove = 0;
         	return false;

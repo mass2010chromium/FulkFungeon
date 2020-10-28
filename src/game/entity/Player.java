@@ -25,7 +25,7 @@ import utils.MathUtils;
  *  @author  Period: 2
  *  @author  Assignment: Dungeon
  */
-public class Player extends GameLiving 
+public class Player extends GameLiving implements ICollidable
 {
 	private static final int SHOOT = 1;
 	private static final int IDLE = 0;
@@ -98,7 +98,7 @@ public class Player extends GameLiving
 		}
 		if (currentWeapon.getName().equals("NULL")) {
 			setCurrentWeapon(wep.getName());
-			removeWeapon("NULL");
+//			removeWeapon("NULL");www
 		}
 		Game.INSTANCE.getSideBar().updateWeapon(weapons.get(wep.getName()));
 	}
@@ -179,6 +179,18 @@ public class Player extends GameLiving
 	
 	public double getScore() {
 		return score;
+	}
+	
+	@Override
+	public void setDead(boolean dead) {
+		if (dead && !isDead()) {
+			Game.INSTANCE.deathMenu();
+//			Game.INSTANCE.startMenu();
+			for (Weapon w : this.weapons.values()) {
+				Game.INSTANCE.getSideBar().removeWeapon(w);
+			}
+		}
+		super.setDead(dead);
 	}
 
 	@Override

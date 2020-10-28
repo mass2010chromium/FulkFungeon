@@ -6,12 +6,12 @@ import java.awt.geom.Point2D;
 
 import game.Game;
 
-public abstract class GameBosses extends GameEnemies
+public abstract class GameBosses extends AnimatedEnemy
 {
 
 	public GameBosses(double xCenter, double yCenter, double xSize, double ySize, double moveSpeed,
-			double health, double shootSpeed, String imgPath) {
-		super(xCenter, yCenter, xSize, ySize, moveSpeed, shootSpeed, health, imgPath);
+			double health, double shootSpeed, String imgPath, int imageX, int imageY, int frames, int tickRate) {
+		super(xCenter, yCenter, xSize, ySize, moveSpeed, shootSpeed, health, imgPath, imageX, imageY, frames, tickRate);
 		// TODO Auto-generated constructor stub
 	}
 

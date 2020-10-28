@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import game.bosses.BossFight;
-import game.bosses.CheesyPoofsFight;
+import game.bosses.ogre.OgreFight;
 import game.entity.AnimatedWeapon;
 import game.entity.GameEnemies;
 import game.entity.GameLiving;
@@ -17,6 +17,7 @@ import game.entity.Weapon;
 import game.entity.enemies.BasicEnemy;
 import game.entity.enemies.SlimeEnemy;
 import game.entity.enemies.SnakeEnemy;
+import utils.MathUtils;
 import utils.WeightedRandomSelector;
 
 /**
@@ -44,19 +45,19 @@ public class Items {
 		
 		//Adding weapons
 		addWeapon(0, new Weapon(0, 30, 6, "weapons/starter.png", 
-				new Projectile(null, 0, 0, 20, 20, 0, 0, 6, null), "NULL"));
+				new Projectile(null, 0, 0, 20, 20, 0, 0, 10, null), "NULL"));
 		
-		addWeapon(0, new Weapon(0, 250, 6, "weapons/sulfuras_anim.png", 
-				new Projectile(null, 0, 0, 100, 100, 0, 0, 100, "weapons/sulfuras_projectile.png"), "Sulfuras"));
+		addWeapon(0.5, new Weapon(0, 250, 6, "weapons/sulfuras_anim.png", 
+				new Projectile(null, 0, 0, 100, 100, 0, 0, 120, "weapons/sulfuras_projectile.png"), "Sulfuras"));
 		
-		addWeapon(0, new Weapon(0, 2, 6, "weapons/unicorn_small.png", 
-				new Projectile(null, 0, 0, 20, 20, 0, 0, 0.5, "weapons/unicorn_projectile.png"), "Unihorn"));
+		addWeapon(0.5, new Weapon(0, 2, 6, "weapons/unicorn_small.png", 
+				new Projectile(null, 0, 0, 20, 20, 0, 0, 0.75, "weapons/unicorn_projectile.png"), "Unihorn"));
 		
 		addWeapon(1, new Weapon(0, 30, 16, "weapons/mouse.png", 
-				new Projectile(null, 0, 0, 20, 20, 0, 0, 10, "weapons/mouse_projectile.png"), "Mouse"));
+				new Projectile(null, 0, 0, 20, 20, 0, 0, 12, "weapons/mouse_projectile.png"), "Mouse"));
 		
 		addWeapon(0.75, new AnimatedWeapon(0, 32, 12, "weapons/Hilt.png", 
-				new Projectile(null, 0, 0, 20, 20, 0, 0, 15, "weapons/lightBlueBall.png"), "Hilt", 4, 8));
+				new Projectile(null, 0, 0, 20, 20, 0, 0, 14, "weapons/lightBlueBall.png"), "Hilt", 4, 8));
 		
 		addWeapon(1, new AnimatedWeapon(0, 50, 16, "weapons/lightpole.png", 
 				new Projectile(null, 0, 0, 20, 20, 0, 0, 20, "weapons/yellowBall.png"), "Light Pole", 1, 1));
@@ -64,8 +65,8 @@ public class Items {
 		addWeapon(1, new Weapon(0, 25, 8, "weapons/facebook.png", 
 				new Projectile(null, 0, 0, 40, 40, 0, 0, 10, "weapons/facebook_projectile.png"), "Facebook"));
 		
-		addWeapon(0, new Weapon(0, 25, 12, "weapons/robot.png", 
-				new Projectile(null, 0, 0, 20, 20, 0, 0, 13, "weapons/robot_projectile.png"), "Steamfunk") {
+		addWeapon(0.5, new Weapon(0, 13, 12, "weapons/robot.png", 
+				new Projectile(null, 0, 0, 20, 20, 0, 0, 7, "weapons/robot_projectile.png"), "Steamfunk") {
 			
 			@Override
 		    public void update( GameLiving shooter, double angle, Point2D pos, boolean shooting, Weapon inst )
@@ -73,8 +74,8 @@ public class Items {
 		    	if (shooting) {
 		    		inst.setCurrentCooldown(inst.getCurrentCooldown() + 1);
 		    		if (inst.getCurrentCooldown() >= inst.getCooldown()) {
-		    			angle += Math.random() / 2;
-		    			angle -= 0.25;
+		    			angle += Math.random() * 0.75;
+		    			angle -= 0.375;
 		    			shoot(shooter, angle, pos, templateProjectile, inst.getShotSpeed());
 		    			inst.setCurrentCooldown(0);;
 		    		}
@@ -154,7 +155,7 @@ public class Items {
 		});
 		
 		addWeapon(0.75, new AnimatedWeapon(0, 120, 30, "weapons/ragnell_anim.png", 
-				new Projectile(null, 0, 0, 30, 30, 0, 0, 50, "weapons/ragnell_projectile.png"), "Ragnell", 10, 12){
+				new Projectile(null, 0, 0, 30, 30, 0, 0, 60, "weapons/ragnell_projectile.png"), "Ragnell", 10, 12){
 			@Override
 			public void upgrade(Weapon inst) {
 				AnimatedWeapon wep = (AnimatedWeapon) inst;
@@ -165,8 +166,8 @@ public class Items {
 			}
 		});
 		
-		addWeapon(0, new Weapon(0, 3, 0.1, "weapons/saltshaker.png", 
-				new Projectile(null, 0, 0, 10, 10, 0, 0, 3, "weapons/whiteBall.png") {
+		addWeapon(0.5, new Weapon(0, 3, 0.1, "weapons/saltshaker.png", 
+				new Projectile(null, 0, 0, 10, 10, 0, 0, 3, "weapons/whiteBall.png", 30) {
 		}, "Salty") {
 			@Override
 		    public void update( GameLiving shooter, double angle, Point2D pos, 
@@ -188,24 +189,52 @@ public class Items {
 		    }
 		});
 		
-		addWeapon(0, new AnimatedWeapon(0, 300, 4, "weapons/alkatraz.png", 
-				new Projectile(null, 0, 0, 100, 100, 0, 0, 80, "weapons/lightGreenBall.png") {
+		addWeapon(0, new AnimatedWeapon(0, 100, 6, "weapons/alkatraz.png", 
+				new Projectile(null, 0, 0, 40, 40, 0, 0, 50, 
+						"bossfights/ogre/projectiles/stage_2_shot1.png", 20) {
 			@Override
-			public void setDead(boolean dead) {
-				if (dead && !isDead()) {
-					for (int i = 0; i < 80; i++) {
-						Projectile p = new Projectile(getShooter(), 
-								getCenter().getX(), getCenter().getY(), 10, 10, 
-								getDamage() / 20 * Math.cos(angle * i), 
-								getDamage() / 20 * Math.sin(angle * i), 
-								getDamage() / 80, "weapons/lightGreenBall.png");
-						p.setLife(175);
-						Game.INSTANCE.spawnEntity(p);
-					}
+			public void tick(Projectile inst) {
+				super.tick(inst);
+				if (inst.getLife() >= getMaxLife()) {
+					Point2D leftVel = MathUtils.scale(
+							MathUtils.rotate(
+									new Point2D.Double(inst.getVX(), inst.getVY()), 
+									new Point2D.Double(), Math.PI / 16), 
+							new Point2D.Double(), 1.25);
+					Point2D rightVel = MathUtils.rotate(leftVel, new Point2D.Double(), -Math.PI / 8);
+					Point2D leftVel2 = MathUtils.rotate(leftVel, new Point2D.Double(), Math.PI / 16);
+					Point2D rightVel2 = MathUtils.rotate(rightVel, new Point2D.Double(), -Math.PI / 16);
+					Game.INSTANCE.spawnEntity(new Projectile(inst.getShooter(), 
+							inst.getCenter().getX(), inst.getCenter().getY(), 20, 20, 
+								leftVel.getX(), leftVel.getY(), getDamage() / 3, 
+								"bossfights/ogre/projectiles/stage_2_shot2.png", 100
+							));
+					Game.INSTANCE.spawnEntity(new Projectile(inst.getShooter(), 
+							inst.getCenter().getX(), inst.getCenter().getY(), 20, 20, 
+								rightVel.getX(), rightVel.getY(), getDamage() / 3, 
+								"bossfights/ogre/projectiles/stage_2_shot2.png", 100
+							));
+					
+					Game.INSTANCE.spawnEntity(new Projectile(inst.getShooter(), 
+							inst.getCenter().getX(), inst.getCenter().getY(), 20, 20, 
+								leftVel2.getX(), leftVel2.getY(), getDamage() / 4, 
+								"bossfights/ogre/projectiles/stage_2_shot2.png", 100
+							));
+					Game.INSTANCE.spawnEntity(new Projectile(inst.getShooter(), 
+							inst.getCenter().getX(), inst.getCenter().getY(), 20, 20, 
+								rightVel2.getX(), rightVel2.getY(), getDamage() / 4, 
+								"bossfights/ogre/projectiles/stage_2_shot2.png", 100
+							));
+					
+					
+					Game.INSTANCE.spawnEntity(new Projectile(inst.getShooter(), 
+							inst.getCenter().getX(), inst.getCenter().getY(), 20, 20, 
+								inst.getVX() * 1.25, inst.getVY() * 1.25, getDamage() / 2, 
+								"bossfights/ogre/projectiles/stage_2_shot2.png", 100
+							));
 				}
-				super.setDead(dead);
 			}
-		}, "Alkatraz", 4, 75){
+		}, "Alkatraz", 4, 25){
 		});
 		
 		//Adding Enemies
@@ -222,7 +251,7 @@ public class Items {
 			}
 			
 		});
-		powerups.add(new GamePowerUps("powerups/healing.png") {
+		powerups.add(new GamePowerUps("powerups/healthup.png") {
 
 			@Override
 			public void applyPowerUp(Player p) {
@@ -232,10 +261,12 @@ public class Items {
 		});
 		
 		//Adding bosses
-		bosses.add(new CheesyPoofsFight());
+//		bosses.add(new CheesyPoofsFight());
+		bosses.add(new OgreFight());
+//		bosses.add(new TMPBossFight());
 	}
 	private void addWeapon(double weight, Weapon weapon) {
-		weapons.add(weight, weapon.getName(), weapon);;
+		weapons.add(weight, weapon.getName(), weapon);
 	}
 	
 	/**
@@ -246,18 +277,35 @@ public class Items {
 		return INSTANCE.weapons.randomItem();
 	}
 	
+	/**
+	 * Gets a weapon by name.
+	 * @param name : Name
+	 * @return : A weapon.
+	 */
 	public static Weapon getWeapon(String name) {
 		return INSTANCE.weapons.get(name);
 	}
 	
+	/**
+	 * Gets a class representing a random normal enemy.
+	 * @return A random class, respecting weights.
+	 */
 	public static Class<? extends GameEnemies> randomEnemy() {
 		return INSTANCE.enemies.randomItem();
 	}
 	
+	/**
+	 * Gets a random powerup.
+	 * @return A random powerup.
+	 */
 	public static GamePowerUps randomPowerUp() {
 		return INSTANCE.powerups.get(RAND.nextInt(INSTANCE.powerups.size()));
 	}
 	
+	/**
+	 * Gets a random boss fight.
+	 * @return A random boss fight
+	 */
 	public static BossFight randomBossFight() {
 		return INSTANCE.bosses.get(RAND.nextInt(INSTANCE.bosses.size()));
 	}

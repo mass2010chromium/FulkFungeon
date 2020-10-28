@@ -16,7 +16,7 @@ public abstract class BossFight extends GameTickable{
 	 * Just extending GameItem to recieve ticks.
 	 */
 	public BossFight(double width, double height) {
-		super(0, 0, width, height, "transparent.png");
+		super(width / 2, width / 2, width, height, "transparent.png");
 	}
 
 	/**

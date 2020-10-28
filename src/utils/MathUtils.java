@@ -16,7 +16,7 @@ public class MathUtils {
 	 * @param amnt : Amount to scale by.
 	 * @return A scaled line.
 	 */
-	public static Line2D scale(Line2D line, double amnt) {
+	public static Line2D scale(Line2D line, double amnt) { //TESTED
 		Point2D p1 = line.getP1();
 		Point2D mid = midpoint(line);
 		double dx = p1.getX() - mid.getX();
@@ -33,7 +33,7 @@ public class MathUtils {
 	 * @param radians : Amount to rotate
 	 * @return Rotated line
 	 */
-	public static Line2D rotate(Line2D line, double radians) {
+	public static Line2D rotate(Line2D line, double radians) { //TESTED
 		Point2D p1 = line.getP1();
 		Point2D mid = midpoint(line);
 		Point2D p2 = rotate(p1, mid, radians);
@@ -46,8 +46,8 @@ public class MathUtils {
 	 * @param line : Line to find length of
 	 * @return Length of the line.
 	 */
-	public static double length(Line2D line) {
-		return Math.hypot(line.getX1() - line.getX2(), line.getY1() - line.getY2());
+	public static double length(Line2D line) { //TESTED
+		return distance(line.getP1(), line.getP2());
 	}
 	
 	/**
@@ -56,7 +56,7 @@ public class MathUtils {
 	 * @param p2 : Second point
 	 * @return Midpoint
 	 */
-	public static Point2D midpoint(Point2D p1, Point2D p2) {
+	public static Point2D midpoint(Point2D p1, Point2D p2) { //TESTED
 		return new Point2D.Double((p1.getX() + p2.getX()) / 2, (p1.getY() + p2.getY()) / 2);
 	}
 	
@@ -65,7 +65,7 @@ public class MathUtils {
 	 * @param line : Line to find midpoint of.
 	 * @return Midpoint
 	 */
-	public static Point2D midpoint(Line2D line) {
+	public static Point2D midpoint(Line2D line) { //TESTED
 		return midpoint(line.getP1(), line.getP2());
 	}
 	
@@ -76,7 +76,7 @@ public class MathUtils {
 	 * @param radians : Radians to rotate.
 	 * @return A new point.
 	 */
-	public static Point2D rotate(Point2D initial, Point2D pivot, double radians) {
+	public static Point2D rotate(Point2D initial, Point2D pivot, double radians) { //TESTED
 		double dx = initial.getX() - pivot.getX();
 		double dy = initial.getY() - pivot.getY();
 		double r = Math.hypot(dx, dy);
@@ -94,7 +94,7 @@ public class MathUtils {
 	 * @param scale : Amount to scale by.
 	 * @return A new point.
 	 */
-	public static Point2D scale(Point2D initial, Point2D center, double scale) {
+	public static Point2D scale(Point2D initial, Point2D center, double scale) { //TESTED
 		double dx = initial.getX() - center.getX();
 		double dy = initial.getY() - center.getY();
 		return new Point2D.Double(center.getX() + dx * scale, center.getY() + dy * scale);
@@ -106,7 +106,7 @@ public class MathUtils {
 	 * @param p2
 	 * @return A new point x1+x2, y1+y2
 	 */
-	public static Point2D add(Point2D p1, Point2D p2) {
+	public static Point2D add(Point2D p1, Point2D p2) { //TESTED
 		return new Point2D.Double(p1.getX() + p2.getX(), p1.getY() + p2.getY());
 	}
 	
@@ -116,7 +116,7 @@ public class MathUtils {
 	 * @param center : Center for anglefinding
 	 * @return Angle, radians, from 0 to 2pi.
 	 */
-	public static double angle(Point2D target, Point2D center) {
+	public static double angle(Point2D target, Point2D center) { //TESTED
 		double dx = target.getX() - center.getX();
 		double dy = target.getY() - center.getY();
 		return (Math.atan2(dy, dx) + Math.PI * 2) % (Math.PI * 2);
@@ -128,7 +128,7 @@ public class MathUtils {
 	 * @param p2
 	 * @return Distance.
 	 */
-	public static double distance(Point2D p1, Point2D p2) {
+	public static double distance(Point2D p1, Point2D p2) { //TESTED
 		return Math.hypot(p1.getX() - p2.getX(), p1.getY() - p2.getY());
 	}
 }

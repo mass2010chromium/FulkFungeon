@@ -9,16 +9,16 @@ public abstract class GameTickable extends GameItem
 {
 	protected double lastX;
 	protected double lastY;
-	private double lastVX, lastVY;
-	protected double tmpX;
-	protected double tmpY;
+//	private double lastVX, lastVY;
+//	protected double tmpX;
+//	protected double tmpY;
 	protected double vX, vY;
-	protected double tmpVX, tmpVY;
+//	protected double tmpVX, tmpVY;
 	
 	public GameTickable(double xCenter, double yCenter, double xSize, double ySize, String imgPath) {
 		super(xCenter, yCenter, xSize, ySize, imgPath);
-		tmpX = xCenter;
-		tmpY = yCenter;
+//		tmpX = xCenter;
+//		tmpY = yCenter;
 	}
 	
 	/**
@@ -27,8 +27,8 @@ public abstract class GameTickable extends GameItem
 	 * @param y : y velocity
 	 */
 	public void accelerate(double x, double y) {
-		tmpVX += x;
-		tmpVY += y;
+//		tmpVX += x;
+//		tmpVY += y;
 		vX += x;
 		vY += y;
 	}
@@ -41,13 +41,13 @@ public abstract class GameTickable extends GameItem
 		return vY;
 	}
 	
-	public double getLastVX() {
-		return lastVX;
-	}
-	
-	public double getLastVY() {
-		return lastVY;
-	}
+//	public double getLastVX() {
+//		return lastVX;
+//	}
+//	
+//	public double getLastVY() {
+//		return lastVY;
+//	}
 
 	/**
 	 * Ticks this entity, moving it and calling tick().
@@ -55,22 +55,22 @@ public abstract class GameTickable extends GameItem
 	public void doTick() {
 		lastX = getCenter().getX();
 		lastY = getCenter().getY();
-		lastVX = vX;
-		lastVY = vY;
+//		lastVX = vX;
+//		lastVY = vY;
 		this.moveBy(vX, vY);
-		tmpX = getCenter().getX();
-		tmpY = getCenter().getY();
+//		tmpX = getCenter().getX();
+//		tmpY = getCenter().getY();
 		tick();
-		tmpVX = vX;
-		tmpVY = vY;
+//		tmpVX = vX;
+//		tmpVY = vY;
 	}
 	
 	public abstract void tick();
     
 	public void postTick() {
-		moveTo(tmpX, tmpY);
-		vX = tmpVX;
-		vY = tmpVY;
+//		moveTo(tmpX, tmpY);
+//		vX = tmpVX;
+//		vY = tmpVY;
 	}
 	
 	/**
@@ -94,16 +94,21 @@ public abstract class GameTickable extends GameItem
     	if (xTime < 0) xTime = Double.POSITIVE_INFINITY;
     	if (yTime < 0) yTime = Double.POSITIVE_INFINITY;
 //    	System.out.println(xTime + ", " + yTime);
+    	double x;
+		double y;
     	if ((xTime <= yTime || (vY > 0 ? (collideY + vY * xTime <= wallY) : (collideY + vY * xTime >= wallY)))
-    			/*&& (vY > 0 ? (collideY + vY * xTime >= wallY) : (collideY + vY * xTime <= wallY))*/) {
-    		tmpX = lastX;
-    		tmpY = getCenter().getY() - vY;
-    		tmpVX = 0;
+    			&& (vY > 0 ? (collideY + vY * xTime >= wallY) : (collideY + vY * xTime <= wallY))) {
+    		x = lastX;
+    		y = getCenter().getY() - vY;
+    		vX = 0;
+//    		tmpVX = 0;
     	}
     	else {
-    		tmpX = getCenter().getX() - vX;
-    		tmpY = lastY;
-    		tmpVY = 0;
+    		x = getCenter().getX() - vX;
+    		y = lastY;
+    		vY = 0;
+//    		tmpVY = 0;
     	}
+    	this.moveTo(x, y);
     }
 }

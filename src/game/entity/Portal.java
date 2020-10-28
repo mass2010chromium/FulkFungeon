@@ -23,9 +23,9 @@ public class Portal extends GameTickable{
 		if (other instanceof Player && Game.INSTANCE.getInput().keyDown(KeyEvent.VK_SPACE)) {
 			Player p = Game.INSTANCE.getPlayer();
 			double deltaScore = p.getScore() - initialScore;
-			p.adjustHealth(10 + deltaScore / 10);
-			((Player) other).adjustHealth(20);
-			p.addScore(20 + deltaScore / 10);
+			p.adjustHealth(10 + deltaScore / 8);
+			((Player) other).adjustHealth(25);
+			p.addScore(20 + deltaScore / 8);
 			Game.INSTANCE.getMap().generateMap(Game.INSTANCE);
 		}
 		

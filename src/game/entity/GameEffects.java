@@ -2,16 +2,25 @@ package game.entity;
 
 /**
  * A potion effect that is temporary.
+ * TODO: Make this
  * @author jpeng988
  */
 public abstract class GameEffects implements Comparable<GameEffects>{
 
 	private int time;
 	private GameLiving affected;
+	private GameEffects copy;
 	
-	public GameEffects(GameLiving target, int time) {
+	/**
+	 * Creates a new GameEffect.
+	 * @param target : Target entity
+	 * @param time : How long this effect lasts
+	 * @param copy : template effect, or null
+	 */
+	public GameEffects(GameLiving target, int time, GameEffects copy) {
 		this.time = time;
 		affected = target;
+		this.copy = copy;
 	}
 	
 	public int getTimeRemaining() {
@@ -31,14 +40,10 @@ public abstract class GameEffects implements Comparable<GameEffects>{
 	 * Update this game effect. Return true if it is expired.
 	 * @return True or false
 	 */
-	public abstract boolean updateInstance(GameEffects effect);
-	
-	public GameEffects copy(GameLiving target) {
-		GameEffects t = this;
-		return new GameEffects(target, time) {
-			public boolean updateInstance(GameEffects effect) {
-				return t.updateInstance(this);
-			}
-		};
+	public boolean updateInstance(GameEffects effect) {
+		if (copy != null) {
+			return copy.updateInstance(this);
+		}
+		return true;
 	}
 }

@@ -90,7 +90,7 @@ public class Weapon extends GameTickable implements Comparable<Weapon>
      */
     public void upgrade(Weapon inst) {
     	inst.templateProjectile.setDamage(inst.templateProjectile.getDamage() + 
-    			inst.getBaseDamage() * WEAPON_BUFF_AMOUNT);
+    			getBaseDamage() * WEAPON_BUFF_AMOUNT);
     }
     
     /**

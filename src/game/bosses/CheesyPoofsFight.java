@@ -23,7 +23,6 @@ public class CheesyPoofsFight extends BossFight{
 
 	@Override
 	public void generate(Player player, Game game) {
-		game.spawnEntity(this);
 		spawnAirship(game, SPACESHIP_POSITION, ARENA_HEIGHT / 2);
 		spawnAirship(game, ARENA_WIDTH - SPACESHIP_POSITION, ARENA_HEIGHT / 2);
 		

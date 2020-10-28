@@ -28,6 +28,19 @@ public class Projectile extends GameTickable
 	
 	private int maxLife;
 	
+	/**
+	 * Creates a new Projectile.
+	 * @param shooter : Its shooter, null for templates.
+	 * @param xCenter : X position, 0 for templates.
+	 * @param yCenter : Y position, 0 for templates.
+	 * @param xSize : Width.
+	 * @param ySize : Height.
+	 * @param vX : X velocity, 0 for templates.
+	 * @param vY : Y velocity, 0 for templates.
+	 * @param damage : Damage this projectile will do.
+	 * @param imgPath : Image path for this projectile's image.
+	 * @param life : Amount of ticks after which this projectile will expire.
+	 */
 	public Projectile(GameItem shooter, double xCenter, double yCenter, double xSize, double ySize, 
 			double vX, double vY, double damage, String imgPath, int life) {
 		super(xCenter, yCenter, xSize, ySize, imgPath);
@@ -77,9 +90,17 @@ public class Projectile extends GameTickable
 	 */
 	public void tick(Projectile inst) {
 		inst.life++;
-		if (inst.life > maxLife) {
-			this.setDead(true);
+		if (inst.life >= maxLife) {
+			inst.setDead(true);
 		}
+	}
+	
+	public double getLife() {
+		return this.life;
+	}
+	
+	public int getMaxLife() {
+		return this.maxLife;
 	}
 	
 	@Override

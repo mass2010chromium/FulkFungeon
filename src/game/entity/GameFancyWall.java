@@ -16,7 +16,7 @@ public class GameFancyWall extends GameWall {
 	private Image capImage;
 	
 	public GameFancyWall(double xCenter, double yCenter, double xSize, double ySize, String imgPath) {
-		super(xCenter, yCenter, xSize, ySize, null);
+		super(xCenter, yCenter, xSize > ySize ? xSize : xSize, ySize, null);
 		this.setImage(imgPath + "_2.png");
 		capImage = Game.getImage(imgPath + "_1.png");
 	}

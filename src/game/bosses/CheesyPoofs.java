@@ -19,7 +19,8 @@ public class CheesyPoofs extends GameBosses{
 	private boolean shootingSpree;
 	private int moveCooldown;
 	public CheesyPoofs(Double xCenter, Double yCenter, Random rand) {
-		super(xCenter, yCenter, 110 * 1.5, 78 * 1.5, 4.5, 2000, 12, "bossfights/cheesypoofs/254.png");
+		super(xCenter, yCenter, 110 * 1.5, 78 * 1.5, 4.5, 2000, 12, "bossfights/cheesypoofs/254.png", 
+				110, 78, 1, 1);
 		ammo = 0;
 		shotCooldown = 0;
 		shootingSpree = false;

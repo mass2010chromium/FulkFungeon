@@ -3,6 +3,7 @@ package game.entity;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -29,6 +30,12 @@ public abstract class GameLiving extends GameTickable implements ICollidable{
 	@Override
 	public void doTick() {
 		super.doTick();
+		Iterator<GameEffects> iter = effects.iterator();
+		while (iter.hasNext()) {
+			if (iter.next().updateInstance(null)) {
+				iter.remove();
+			}
+		}
 	}
 	
 	/**
@@ -37,6 +44,14 @@ public abstract class GameLiving extends GameTickable implements ICollidable{
 	 */
 	public Set<GameEffects> getActiveEffects() {
 		return this.effects;
+	}
+	
+	/**
+	 * Add a new potion effect to this entity.
+	 * @param effect
+	 */
+	public void addEffect(GameEffects effect) {
+		this.effects.add(effect);
 	}
 	
 	/**

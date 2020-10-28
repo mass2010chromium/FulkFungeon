@@ -16,7 +16,7 @@ public class SnakeEnemy extends AnimatedEnemy{
 	private int shotCooldown;
 	
 	public SnakeEnemy(Double xCenter, Double yCenter, Random rand) {
-		super(xCenter, yCenter, 40, 40, 3.5, 4.5, 50, "enemies/snake.png", 44, 44, 5, 8);
+		super(xCenter, yCenter, 40, 40, 3.5, 4, 50, "enemies/snake.png", 44, 44, 5, 8);
 		shotCooldown = 0;
 	}
 
@@ -29,17 +29,22 @@ public class SnakeEnemy extends AnimatedEnemy{
 
 	@Override
 	public void tick() {
-    	if (moveRandomly() || startRandomMovement(50)) {
-    		
+    	if (moveRandomly()) {
+    		if (startRandomMovement(50)) {
+    			
+    		}
+        	else {
+            	shotCooldown++;
+            	if (shotCooldown >= 30) {
+        	    	Projectile p = super.shootSpread(0.25, shootSpeed, 7, "enemies/snake_projectile.png");
+        	    	p.setLife(70);
+        	    	shotCooldown = 0;
+            	}
+        	}
     	}
     	else {
     		this.moveDirect(MathUtils.angle(player.getCenter(), getCenter()), moveSpeed);
-        	shotCooldown++;
-        	if (shotCooldown >= 30) {
-    	    	Projectile p = super.shootSpread(0.25, shootSpeed, 7, "enemies/snake_projectile.png");
-    	    	p.setLife(70);
-    	    	shotCooldown = 0;
-        	}
+    		randMove = 100;
     	}
 	}
 	
@@ -47,7 +52,7 @@ public class SnakeEnemy extends AnimatedEnemy{
 	public double adjustHealth(double amount) {
 		double tmp = super.adjustHealth(amount);
 		if (amount < 0) {
-			randMove = 50;
+			randMove = 100;
             moveEigths(Math.PI * 2 * Math.random(), moveSpeed);
 		}
 		return tmp;
